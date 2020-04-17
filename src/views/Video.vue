@@ -1,9 +1,9 @@
 <template>
-  <div class="video">
+  <v-content>
     <MultiViewMoviePlayer
       videopath="http://distribution.bbb3d.renderfarming.net/video/mp4/bbb_sunflower_1080p_30fps_normal.mp4"
     />
-  </div>
+  </v-content>
 </template>
 
 <script>

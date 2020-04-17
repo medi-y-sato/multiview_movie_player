@@ -1,7 +1,9 @@
 <template>
-  <div class="hello">
-    <p>ここにはなんもないです</p>
-  </div>
+  <v-container class="fill-height" fluid>
+    <v-row align="center" justify="center">
+      <v-col class="text-center">ここはなんもないです</v-col>
+    </v-row>
+  </v-container>
 </template>
 
 <script lang="ts">
