@@ -1,4 +1,4 @@
-# multiview_movie_player
+# multiview_movie_player ![CI](https://github.com/medi-y-sato/multiview_movie_player/workflows/CI/badge.svg)
 
 ## build by zeit
 
