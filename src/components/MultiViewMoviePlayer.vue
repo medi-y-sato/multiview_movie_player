@@ -2,8 +2,8 @@
   <v-container class="fill-height fill-width" fluid>
     <v-row align="streach" justify="space-around">
       <v-col class="text-center" justify="space-around">
-        <video controls class="el-video1" width="100%" height="100%">
-          <source :src="videopath" />
+        <video class="el-video1" width="100%" height="100%">
+          <source :src="videopath1" />
         </video>
         <div>
           <button @click="clickPlaybutton(1)">
@@ -12,33 +12,11 @@
         </div>
       </v-col>
       <v-col class="text-center" justify="space-around">
-        <video controls class="el-video2" width="100%" height="100%">
-          <source :src="videopath" />
+        <video class="el-video2" width="100%" height="100%">
+          <source :src="videopath2" />
         </video>
         <div>
           <button @click="clickPlaybutton(2)">
-            <v-icon>{{btnstate}}</v-icon>
-          </button>
-        </div>
-      </v-col>
-    </v-row>
-    <v-row align="streach" justify="space-around">
-      <v-col class="text-center" justify="space-around">
-        <video controls class="el-video3" width="100%" height="100%">
-          <source :src="videopath" />
-        </video>
-        <div>
-          <button @click="clickPlaybutton(3)">
-            <v-icon>{{btnstate}}</v-icon>
-          </button>
-        </div>
-      </v-col>
-      <v-col class="text-center" justify="space-around">
-        <video controls class="el-video4" width="100%" height="100%">
-          <source :src="videopath" />
-        </video>
-        <div>
-          <button @click="clickPlaybutton(4)">
             <v-icon>{{btnstate}}</v-icon>
           </button>
         </div>
@@ -55,7 +33,10 @@ export default class MultiViewMoviePlayer extends Vue {
   play = false;
   btnstate = "mdi-play";
 
-  @Prop() private videopath!: string;
+  @Prop() private videopath1!: string;
+  @Prop() private videopath2!: string;
+
+  // ConstructorでHTMLMediaElementのインスタンス作ってvideoタグに放り込む方式がいいんじゃないか？
 
   clickPlaybutton(playernumber: number) {
     const videoComponent: Element = document.querySelector(
