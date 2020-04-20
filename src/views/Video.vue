@@ -1,6 +1,10 @@
 <template>
   <v-content>
-    <MultiViewMoviePlayer videopath1="4k.mp4" videopath2="2k.mp4" />
+    <MultiViewMoviePlayer videopath1="video1.mp4" videopath2="video2.mp4" />
+    <p>
+      video from
+      <a href="https://www.pexels.com/videos/">Pexels</a>
+    </p>
   </v-content>
 </template>
 
