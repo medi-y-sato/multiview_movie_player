@@ -1,8 +1,6 @@
 <template>
   <v-content>
-    <MultiViewMoviePlayer
-      videopath="http://distribution.bbb3d.renderfarming.net/video/mp4/bbb_sunflower_1080p_30fps_normal.mp4"
-    />
+    <MultiViewMoviePlayer videopath1="4k.mp4" videopath2="2k.mp4" />
   </v-content>
 </template>
 
