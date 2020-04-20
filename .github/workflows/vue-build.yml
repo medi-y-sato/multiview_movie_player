@@ -29,6 +29,8 @@ jobs:
 
         # cache:
 #        path: ~/.npm 
+    - name: npm Install
+      run: npm install
 
     # Runs a set of commands using the runners shell
     - name: build & lint
