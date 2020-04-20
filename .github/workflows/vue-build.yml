@@ -28,7 +28,7 @@ jobs:
         node-version: 10
 
         # cache:
-        path: ~/.npm 
+#        path: ~/.npm 
 
     # Runs a set of commands using the runners shell
     - name: build & lint
