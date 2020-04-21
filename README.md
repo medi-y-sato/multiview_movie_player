@@ -1,9 +1,6 @@
 # multiview_movie_player ![CI](https://github.com/medi-y-sato/multiview_movie_player/workflows/CI/badge.svg)
 
-## build by zeit
-
-https://zeit.co/medi-y-sato/multiview-movie-player
-https://multiview-movie-player.now.sh/
+http://medi-y-sato.github.io/multiview_movie_player/
 
 ## Project setup
 
