@@ -37,3 +37,13 @@ jobs:
       run: |
         npm run build
         npm run lint
+        
+    # deploy to github pages
+    - name: Deploy
+      if: success()
+      uses: crazy-max/ghaction-github-pages@v1
+      with:
+        target_branch: gh-pages
+        build_dir: public
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
