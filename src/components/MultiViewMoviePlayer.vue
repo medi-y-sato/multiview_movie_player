@@ -18,12 +18,14 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
+import HLS from "hls.js";
 
-@Component
+@Component([HLS])
 export default class MultiViewMoviePlayer extends Vue {
   play = false;
   videoUrlList: Array<string> = [];
   videoComponents: Array<HTMLVideoElement> = [];
+  masterVolume = 1;
 
   @Prop() private videopath1?: string;
   @Prop() private videopath2?: string;
@@ -45,8 +47,18 @@ export default class MultiViewMoviePlayer extends Vue {
         const videoComponent: HTMLVideoElement = document.createElement(
           "video"
         );
-        videoComponent.src = url;
-        videoComponent.className = "videoplayer";
+        const hls: HLS = new HLS();
+        if (HLS.isSupported()) {
+          hls.loadSource(url);
+          hls.attachMedia(videoComponent);
+          hls.on(HLS.Events.MANIFEST_PARSED, function() {
+            console.log(`video ${i} MANIFEST_PARSED`);
+          });
+        } else {
+          videoComponent.src = url;
+          videoComponent.className = "videoplayer";
+        }
+        videoComponent.volume = 0.1;
         this.videoComponents[i] = videoComponent;
         console.log(`${i} : ${this.videoComponents[i].src}`);
         i++;
@@ -77,6 +89,7 @@ export default class MultiViewMoviePlayer extends Vue {
           node.remove();
         });
         videoComponent1.width = screenWidth * 0.9;
+        videoComponent1.volume = this.masterVolume;
         this.$nextTick(() => {
           videoColumn1.appendChild(videoComponent1);
         });
@@ -87,6 +100,7 @@ export default class MultiViewMoviePlayer extends Vue {
         videoColumn2.childNodes.forEach(node => {
           node.remove();
         });
+        videoComponent2.volume = 0;
         videoComponent2.width = screenWidth * 0.9 * 0.2;
         this.$nextTick(() => {
           videoColumn2.appendChild(videoComponent2);

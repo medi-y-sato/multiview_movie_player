@@ -1,6 +1,9 @@
 <template>
   <v-content>
-    <MultiViewMoviePlayer videopath1="video1.mp4" videopath2="video2.mp4" />
+    <MultiViewMoviePlayer
+      videopath1="https://bitdash-a.akamaihd.net/content/MI201109210084_1/m3u8s/f08e80da-bf1d-4e3d-8899-f0f6155f6efa.m3u8"
+      videopath2="https://bitdash-a.akamaihd.net/content/sintel/hls/playlist.m3u8"
+    />
     <p>
       video from
       <a href="https://www.pexels.com/videos/">Pexels</a>
