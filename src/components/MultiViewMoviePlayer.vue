@@ -25,7 +25,10 @@ export default class MultiViewMoviePlayer extends Vue {
   play = false;
   videoUrlList: Array<string> = [];
   videoComponents: Array<HTMLVideoElement> = [];
-  masterVolume = 1;
+  hlsComponents: Array<HLS> = [];
+  masterVolume = 0.1;
+  activeVideoIndex: number;
+  maxActiveVideoIndex: number;
 
   @Prop() private videopath1?: string;
   @Prop() private videopath2?: string;
@@ -34,6 +37,9 @@ export default class MultiViewMoviePlayer extends Vue {
 
   constructor() {
     super();
+
+    this.activeVideoIndex = 0;
+    this.maxActiveVideoIndex = 1;
 
     let i = 0;
     console.log("constructor");
@@ -47,20 +53,17 @@ export default class MultiViewMoviePlayer extends Vue {
         const videoComponent: HTMLVideoElement = document.createElement(
           "video"
         );
-        const hls: HLS = new HLS();
         if (HLS.isSupported()) {
-          hls.loadSource(url);
-          hls.attachMedia(videoComponent);
-          hls.on(HLS.Events.MANIFEST_PARSED, function() {
-            console.log(`video ${i} MANIFEST_PARSED`);
-          });
+          this.hlsComponents[i] = new HLS();
+          this.hlsComponents[i].loadSource(url);
+          this.hlsComponents[i].attachMedia(videoComponent);
         } else {
           videoComponent.src = url;
           videoComponent.className = "videoplayer";
         }
-        videoComponent.volume = 0.1;
+        videoComponent.volume = this.masterVolume;
         this.videoComponents[i] = videoComponent;
-        console.log(`${i} : ${this.videoComponents[i].src}`);
+        console.dir(this.videoComponents[i]);
         i++;
       }
     });
@@ -90,6 +93,7 @@ export default class MultiViewMoviePlayer extends Vue {
         });
         videoComponent1.width = screenWidth * 0.9;
         videoComponent1.volume = this.masterVolume;
+
         this.$nextTick(() => {
           videoColumn1.appendChild(videoComponent1);
         });
@@ -102,6 +106,7 @@ export default class MultiViewMoviePlayer extends Vue {
         });
         videoComponent2.volume = 0;
         videoComponent2.width = screenWidth * 0.9 * 0.2;
+
         this.$nextTick(() => {
           videoColumn2.appendChild(videoComponent2);
         });
@@ -110,11 +115,26 @@ export default class MultiViewMoviePlayer extends Vue {
   }
 
   changeVideo() {
+    this.activeVideoIndex =
+      this.activeVideoIndex < this.maxActiveVideoIndex
+        ? this.activeVideoIndex + 1
+        : 0;
+    console.log(`activeVideoIndex : ${this.activeVideoIndex}`);
+
+    const subVideoIndex = this.activeVideoIndex == 0 ? 1 : 0;
+
     this.$nextTick(() => {
-      const tempVideoComponent = this.videoComponents[0];
-      this.videoComponents[0] = this.videoComponents[1];
-      this.videoComponents[1] = tempVideoComponent;
-      this.setController(this.videoComponents[0], this.videoComponents[1]);
+      const mainVideoComponent = this.videoComponents[this.activeVideoIndex];
+      const subVideoComponent = this.videoComponents[subVideoIndex];
+
+      this.hlsComponents[this.activeVideoIndex].autoLevelCapping = -1;
+      this.hlsComponents[this.activeVideoIndex].nextLevel = -1;
+
+      this.hlsComponents[subVideoIndex].autoLevelCapping = 0;
+      this.hlsComponents[subVideoIndex].nextLoadLevel = 0;
+      this.hlsComponents[subVideoIndex].nextLevel = 0;
+
+      this.setController(mainVideoComponent, subVideoComponent);
     });
   }
 
