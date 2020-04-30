@@ -1,10 +1,10 @@
 <template>
   <v-content>
     <MultiViewMoviePlayer
-      videopath1="ミクリンレンでハレ晴レユカイ1_x264_480p.mov"
-      videopath2="ミクリンレンでハレ晴レユカイ2_x264_480p.mov"
-      videopath3="ミクリンレンでハレ晴レユカイ3_x264_480p.mov"
-      videopath4="ミクリンレンでハレ晴レユカイ4_x264_480p.mov"
+      videopath1="ミクリンレンでハレ晴レユカイ1_x264_low.mp4"
+      videopath2="ミクリンレンでハレ晴レユカイ2_x264_low.mp4"
+      videopath3="ミクリンレンでハレ晴レユカイ3_x264_low.mp4"
+      videopath4="ミクリンレンでハレ晴レユカイ4_x264_low.mp4"
     />
     <!-- MultiViewMoviePlayer
       videopath2="http://3qjcxj7d6rmwu6.data.mediastore.ap-northeast-1.amazonaws.com/livea/main.m3u8"
