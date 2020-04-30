@@ -69,7 +69,6 @@ export default class MultiViewMoviePlayer extends Vue {
         }
         videoComponent.volume = 0;
         this.videoComponents[i] = videoComponent;
-        console.dir(this.videoComponents[i]);
         i++;
       }
     });
@@ -120,70 +119,81 @@ export default class MultiViewMoviePlayer extends Vue {
         });
       }
 
-      const videoColumn2 = document.querySelector(".col-video2");
-      if (videoColumn2) {
-        videoColumn2.childNodes.forEach(node => {
-          node.remove();
-        });
-        videoComponent2.volume = 0;
-        videoComponent2.width = screenWidth / 8;
-        videoComponent2.height = screenHeight / 8;
+      if (videoComponent2) {
+        const videoColumn2 = document.querySelector(".col-video2");
+        if (videoColumn2) {
+          videoColumn2.childNodes.forEach(node => {
+            node.remove();
+          });
+          videoComponent2.volume = 0;
+          videoComponent2.width = screenWidth / 8;
+          videoComponent2.height = screenHeight / 8;
 
-        this.$nextTick(() => {
-          videoColumn2.appendChild(videoComponent2);
-        });
+          this.$nextTick(() => {
+            videoColumn2.appendChild(videoComponent2);
+          });
+        }
       }
-      const videoColumn3 = document.querySelector(".col-video3");
-      if (videoColumn3) {
-        videoColumn3.childNodes.forEach(node => {
-          node.remove();
-        });
-        videoComponent3.volume = 0;
-        videoComponent3.width = screenWidth / 8;
-        videoComponent3.height = screenHeight / 8;
 
-        this.$nextTick(() => {
-          videoColumn3.appendChild(videoComponent3);
-        });
+      if (videoComponent3) {
+        const videoColumn3 = document.querySelector(".col-video3");
+        if (videoColumn3) {
+          videoColumn3.childNodes.forEach(node => {
+            node.remove();
+          });
+          videoComponent3.volume = 0;
+          videoComponent3.width = screenWidth / 8;
+          videoComponent3.height = screenHeight / 8;
+
+          this.$nextTick(() => {
+            videoColumn3.appendChild(videoComponent3);
+          });
+        }
       }
-      const videoColumn4 = document.querySelector(".col-video4");
-      if (videoColumn4) {
-        videoColumn4.childNodes.forEach(node => {
-          node.remove();
-        });
-        videoComponent4.volume = 0;
-        videoComponent4.width = screenWidth / 8;
-        videoComponent4.height = screenHeight / 8;
 
-        this.$nextTick(() => {
-          videoColumn4.appendChild(videoComponent4);
-        });
+      if (videoComponent4) {
+        const videoColumn4 = document.querySelector(".col-video4");
+        if (videoColumn4) {
+          videoColumn4.childNodes.forEach(node => {
+            node.remove();
+          });
+          videoComponent4.volume = 0;
+          videoComponent4.width = screenWidth / 8;
+          videoComponent4.height = screenHeight / 8;
+
+          this.$nextTick(() => {
+            videoColumn4.appendChild(videoComponent4);
+          });
+        }
       }
     });
   }
 
   changeVideo(clickdedIndex: number) {
-    this.activeVideoIndex = clickdedIndex;
-    console.log(`activeVideoIndex : ${this.activeVideoIndex}`);
+    if (this.activeVideoIndex != clickdedIndex) {
+      this.activeVideoIndex = clickdedIndex;
+    } else {
+      this.activeVideoIndex = clickdedIndex - 1;
+    }
 
     let skipCount = 0;
     let mainVideoComponent: HTMLVideoElement;
     const subVideoComponent: Array<HTMLVideoElement> = [];
     [0, 1, 2, 3].forEach(subIndex => {
       if (subIndex == this.activeVideoIndex) {
-        console.log(`${subIndex} : main`);
         mainVideoComponent = this.videoComponents[subIndex];
         if (this.hlsComponents[subIndex]) {
           this.hlsComponents[subIndex].autoLevelCapping = -1;
           this.hlsComponents[subIndex].nextLevel = -1;
         }
       } else {
-        console.log(`${subIndex} : sub ${skipCount}`);
-        subVideoComponent[skipCount] = this.videoComponents[subIndex];
-        if (this.hlsComponents[subIndex]) {
-          this.hlsComponents[subIndex].autoLevelCapping = 0;
-          this.hlsComponents[subIndex].nextLoadLevel = 0;
-          this.hlsComponents[subIndex].nextLevel = 0;
+        if (this.videoComponents[subIndex]) {
+          subVideoComponent[skipCount] = this.videoComponents[subIndex];
+          if (this.hlsComponents[subIndex]) {
+            this.hlsComponents[subIndex].autoLevelCapping = 0;
+            this.hlsComponents[subIndex].nextLoadLevel = 0;
+            this.hlsComponents[subIndex].nextLevel = 0;
+          }
         }
         skipCount++;
       }
