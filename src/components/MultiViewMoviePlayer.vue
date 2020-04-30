@@ -2,8 +2,14 @@
   <v-container>
     <v-row>
       <div class="col-video">
-        <div class="col-video1">video1</div>
-        <div class="col-video2" @click="changeVideo()">video2</div>
+        <div class="col-video-main">
+          <div class="col-video1">video1</div>
+          <div class="col-video-sub">
+            <div class="col-video2" @click="changeVideo(1)">video2</div>
+            <div class="col-video3" @click="changeVideo(2)">video3</div>
+            <div class="col-video4" @click="changeVideo(3)">video4</div>
+          </div>
+        </div>
       </div>
     </v-row>
     <v-row>
@@ -61,7 +67,7 @@ export default class MultiViewMoviePlayer extends Vue {
           videoComponent.src = url;
           videoComponent.className = "videoplayer";
         }
-        videoComponent.volume = this.masterVolume;
+        videoComponent.volume = 0;
         this.videoComponents[i] = videoComponent;
         console.dir(this.videoComponents[i]);
         i++;
@@ -85,14 +91,16 @@ export default class MultiViewMoviePlayer extends Vue {
   ) {
     this.$nextTick(() => {
       const screenWidth = document.body.clientWidth;
+      const screenHeight = (screenWidth / 16) * 9;
 
       const videoColumn1 = document.querySelector(".col-video1");
       if (videoColumn1) {
         videoColumn1.childNodes.forEach(node => {
           node.remove();
         });
-        videoComponent1.width = screenWidth * 0.9;
         videoComponent1.volume = this.masterVolume;
+        videoComponent1.width = screenWidth;
+        videoComponent1.height = screenHeight;
 
         this.$nextTick(() => {
           videoColumn1.appendChild(videoComponent1);
@@ -105,7 +113,8 @@ export default class MultiViewMoviePlayer extends Vue {
           node.remove();
         });
         videoComponent2.volume = 0;
-        videoComponent2.width = screenWidth * 0.9 * 0.2;
+        videoComponent2.width = screenWidth / 8;
+        videoComponent2.height = screenHeight / 8;
 
         this.$nextTick(() => {
           videoColumn2.appendChild(videoComponent2);
@@ -114,7 +123,8 @@ export default class MultiViewMoviePlayer extends Vue {
     });
   }
 
-  changeVideo() {
+  changeVideo(clickdedIndex: number) {
+    console.log(`clicked : ${clickdedIndex}`);
     this.activeVideoIndex =
       this.activeVideoIndex < this.maxActiveVideoIndex
         ? this.activeVideoIndex + 1
@@ -156,27 +166,50 @@ export default class MultiViewMoviePlayer extends Vue {
 
 <style scoped>
 .col-video {
+  width: 100%;
+  background-color: black;
+}
+.col-video-main {
   position: relative;
-  height: 90%;
+  z-index: 1;
   margin: 0;
   padding: 0;
-  background-color: aqua;
+  background-color: burlywood;
+}
+.col-video-sub {
+  z-index: 2;
+  position: absolute;
+  width: 100%;
+  display: flex;
+  align-items: flex-end;
+  background-color: pink;
 }
 .col-video1 {
   position: relative;
-  z-index: 1;
   padding: 0;
   margin: 0;
   float: right;
   background-color: bisque;
 }
 .col-video2 {
-  position: absolute;
-  z-index: 2;
   padding: 0;
   margin: 0;
   bottom: 1em;
-  right: 2em;
+  right: 0%;
+  background-color: lightblue;
+}
+.col-video3 {
+  padding: 0;
+  margin: 0;
+  bottom: 1em;
+  right: 20%;
+  background-color: greenyellow;
+}
+.col-video4 {
+  padding: 0;
+  margin: 0;
+  bottom: 1em;
+  right: 40%;
   background-color: coral;
 }
 </style>
