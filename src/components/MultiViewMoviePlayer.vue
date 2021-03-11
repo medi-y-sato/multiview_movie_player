@@ -53,8 +53,8 @@ export default class MultiViewMoviePlayer extends Vue {
       this.videopath1,
       this.videopath2,
       this.videopath3,
-      this.videopath4
-    ].forEach(url => {
+      this.videopath4,
+    ].forEach((url) => {
       if (typeof url == "string") {
         const videoComponent: HTMLVideoElement = document.createElement(
           "video"
@@ -83,9 +83,9 @@ export default class MultiViewMoviePlayer extends Vue {
 
   get btnstate(): string {
     if (this.play == true) {
-      return "mdi-play";
-    } else {
       return "mdi-pause";
+    } else {
+      return "mdi-play";
     }
   }
 
@@ -107,7 +107,7 @@ export default class MultiViewMoviePlayer extends Vue {
 
       const videoColumn1 = document.querySelector(".col-video1");
       if (videoColumn1) {
-        videoColumn1.childNodes.forEach(node => {
+        videoColumn1.childNodes.forEach((node) => {
           node.remove();
         });
         videoComponent1.volume = this.masterVolume;
@@ -122,7 +122,7 @@ export default class MultiViewMoviePlayer extends Vue {
       if (videoComponent2) {
         const videoColumn2 = document.querySelector(".col-video2");
         if (videoColumn2) {
-          videoColumn2.childNodes.forEach(node => {
+          videoColumn2.childNodes.forEach((node) => {
             node.remove();
           });
           videoComponent2.volume = 0;
@@ -138,7 +138,7 @@ export default class MultiViewMoviePlayer extends Vue {
       if (videoComponent3) {
         const videoColumn3 = document.querySelector(".col-video3");
         if (videoColumn3) {
-          videoColumn3.childNodes.forEach(node => {
+          videoColumn3.childNodes.forEach((node) => {
             node.remove();
           });
           videoComponent3.volume = 0;
@@ -154,7 +154,7 @@ export default class MultiViewMoviePlayer extends Vue {
       if (videoComponent4) {
         const videoColumn4 = document.querySelector(".col-video4");
         if (videoColumn4) {
-          videoColumn4.childNodes.forEach(node => {
+          videoColumn4.childNodes.forEach((node) => {
             node.remove();
           });
           videoComponent4.volume = 0;
@@ -179,7 +179,7 @@ export default class MultiViewMoviePlayer extends Vue {
     let skipCount = 0;
     let mainVideoComponent: HTMLVideoElement;
     const subVideoComponent: Array<HTMLVideoElement> = [];
-    [0, 1, 2, 3].forEach(subIndex => {
+    [0, 1, 2, 3].forEach((subIndex) => {
       if (subIndex == this.activeVideoIndex) {
         mainVideoComponent = this.videoComponents[subIndex];
         if (this.hlsComponents[subIndex]) {
@@ -211,12 +211,12 @@ export default class MultiViewMoviePlayer extends Vue {
 
   clickPlaybutton() {
     if (this.play == true) {
-      this.videoComponents.forEach(videoComponents => {
+      this.videoComponents.forEach((videoComponents) => {
         videoComponents.pause();
       });
       this.play = false;
     } else {
-      this.videoComponents.forEach(videoComponents => {
+      this.videoComponents.forEach((videoComponents) => {
         videoComponents.play();
       });
       this.play = true;
